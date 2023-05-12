@@ -1,25 +1,57 @@
-﻿@page "/superheroes"
+﻿@page "/"
 @inject ISuperHeroService SuperHeroService
+@inject NavigationManager NavigationManager
 
 <PageTitle>Super Heroes</PageTitle>
 
-<h3>Super Heroes</h3>
 
-<table>
-    <thead>
-        <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Hero Name</th>
-            <th>Comic</th>
-            <th></th>
-        </tr>
-        <tbody>
-
-        </tbody>
-    </thead>
-</table>
+<div class="container">
+    <h3>Super Heroes</h3>
+    <div class="row">
+        <div class="col-md6">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Hero Name</th>
+                        <th>Comic</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var hero in SuperHeroService.Heroes)
+                    {
+                        <tr>
+                            <td>@hero.FirstName</td>
+                            <td>@hero.LastName</td>
+                            <td>@hero.HeroName</td>
+                            <td>@hero.Comic.Name</td>
+                            <td>
+                                <button type="button" class="btn btn-primary" @onclick="() => ShowHero(hero.Id)"><i class="oi oi-pencil"></i></button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <button type="button" class="btn btn-primary" @onclick="CreateNewHero">Create New Hero</button>
+        </div>
+    </div>
+</div>
 
 @code {
+    protected override async Task OnInitializedAsync()
+    {
+        await SuperHeroService.GetSuperHeroes();
+    }
 
+    private void ShowHero(int id)
+    {
+        NavigationManager.NavigateTo($"hero/{id}");
+    }
+
+    void CreateNewHero()
+    {
+        NavigationManager.NavigateTo("/hero");
+    }
 }

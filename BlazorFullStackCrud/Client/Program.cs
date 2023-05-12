@@ -1,4 +1,5 @@
-global using BlazorFullStackCrud.Client.Service.SuperHeroService;
+global using BlazorFullStackCrud.Client.Services.SuperHeroService;
+global using BlazorFullStackCrud.Shared;
 using BlazorFullStackCrud.Client;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
